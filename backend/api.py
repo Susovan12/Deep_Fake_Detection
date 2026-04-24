@@ -35,13 +35,13 @@ def load_model():
     torch  = _torch
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    DFDC_DIR = os.path.join(BASE_DIR, "kaggle-dfdc-master", "kaggle-dfdc-master")
+    DFDC_DIR = os.path.join(BASE_DIR, "FaceDetector_PP", "FaceDetector_PP")
     sys.path.insert(0, DFDC_DIR)
     sys.path.insert(0, os.path.join(DFDC_DIR, "external", "Pytorch_Retinaface"))
     from face_utils import norm_crop, FaceDetector
 
     retinaface = FaceDetector(device=device.type)
-    retinaface.load_checkpoint(os.path.join(DFDC_DIR, "pth_fiels", "RetinaFace-Resnet50-fixed.pth"))
+    retinaface.load_checkpoint(os.path.join(DFDC_DIR, "pth_fiels", "FaceForensics_PP.pth"))
 
     mean      = [0.485, 0.456, 0.406]
     std       = [0.229, 0.224, 0.225]
@@ -56,7 +56,7 @@ def load_model():
             self.fc = nn.Linear(2048, 1)
 
     _resnext = MyResNeXt().to(device)
-    _resnext.load_state_dict(torch.load(os.path.join(BASE_DIR, "resnext.pth"), map_location=device))
+    _resnext.load_state_dict(torch.load(os.path.join(BASE_DIR, "FaceForensics.pth"), map_location=device))
     _resnext.eval()
 
     # ── EfficientNet-B4 ───────────────────────────────────

@@ -5,6 +5,9 @@
 **/*.mkv
 **/*.webm
 
+# Large model weights
+**/*.pth
+
 # Video datasets (too large for GitHub)
 backend/FaceForensics++_C23/
 backend/videos/

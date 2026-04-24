@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--fab-radius:18px}
+
+html,body{
+  width:100%;height:100%;background:transparent;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--fab-radius);
+  clip-path:inset(0 round var(--fab-radius));
+}
+
+.fab{
+  width:54px;height:54px;border-radius:var(--fab-radius);
+  background:linear-gradient(140deg,#a5b4fc 0%,#4338ca 100%);
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  box-shadow:0 4px 24px rgba(99,102,241,.52),0 0 0 1.5px rgba(255,255,255,.16),inset 0 1px 0 rgba(255,255,255,.3);
+  transition:transform .15s,box-shadow .2s;
+}
+.fab:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(99,102,241,.68),0 0 0 1.5px rgba(255,255,255,.22)}
+.fab:active{transform:scale(.92)}
+.fab svg{width:26px;height:26px;pointer-events:none}
+
+/* Pulse ring when panel open */
+.fab.active::before{
+  content:'';position:absolute;inset:-6px;border-radius:calc(var(--fab-radius) + 6px);
+  border:1.5px solid rgba(165,180,252,.58);
+  animation:ring 2s ease-in-out infinite;
+}
+@keyframes ring{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:0;transform:scale(1.3)}}
+
+/* Constant subtle outer glow ring */
+.fab::after{
+  content:'';position:absolute;inset:-2px;border-radius:calc(var(--fab-radius) + 2px);
+  border:.5px solid rgba(129,140,248,.42);
+}
+</style>
+</head>
+<body>
+<button class="fab" id="fab" title="Toggle TrueVision">
+  <!-- Indigo shield + eye -->
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6L12 2z" fill="rgba(18,12,40,0.82)"/>
+    <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6L12 2z" fill="rgba(255,255,255,0.9)" style="clip-path:inset(0 0 50% 0)"/>
+    <ellipse cx="12" cy="13.5" rx="3.8" ry="2.8" fill="rgba(165,180,252,0.42)"/>
+    <circle cx="12" cy="13.5" r="1.8" fill="white"/>
+    <circle cx="12" cy="13.5" r=".7" fill="#4f46e5"/>
+  </svg>
+</button>
+
+<script>
+const fab=document.getElementById('fab');
+let isOpen=false,isDragged=false,downX,downY;
+
+document.addEventListener('mousedown',e=>{isDragged=false;downX=e.screenX;downY=e.screenY});
+document.addEventListener('mousemove',e=>{
+  if(e.buttons!==1)return;
+  const dx=e.screenX-downX,dy=e.screenY-downY;
+  if(Math.abs(dx)>3||Math.abs(dy)>3){
+    isDragged=true;
+    window.electronAPI?.dragFab({dx,dy});
+    downX=e.screenX;downY=e.screenY;
+  }
+});
+fab.addEventListener('click',()=>{
+  if(isDragged)return;
+  isOpen=!isOpen;
+  fab.classList.toggle('active',isOpen);
+  window.electronAPI?.toggleMain();
+});
+</script>
+</body>
+</html>
