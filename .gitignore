@@ -1,37 +1,45 @@
-# All video files
+# ── Video files ───────────────────────────────────────────
 **/*.mp4
 **/*.avi
 **/*.mov
 **/*.mkv
 **/*.webm
 
-# Large model weights
-**/*.pth
-
-# Video datasets (too large for GitHub)
+# ── Video datasets (too large for GitHub) ─────────────────
 backend/FaceForensics++_C23/
 backend/videos/
-backend/kaggle-dfdc-master/kaggle-dfdc-master/test_videos/
-backend/kaggle-dfdc-master/kaggle-dfdc-master/pth_fiels/*.pth
+backend/kaggle-dfdc-master/
 
-# Cache folders
+# ── Cache folders ─────────────────────────────────────────
 backend/deepfake-cnn-lstm/cache/
 backend/deepfake-cnn-lstm/cache_fast/
 
-# Saved videos & feedback DB
+# ── Saved videos & feedback DB ────────────────────────────
 backend/saved_videos/
 backend/feedback.db
 
-# Python
+# ── Python ────────────────────────────────────────────────
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
 .env
 venv/
+.venv/
+*.egg-info/
 
-# Node
+# ── Node ──────────────────────────────────────────────────
 frontend/node_modules/
 
-# OS
+# ── OS ────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# ── IDE ───────────────────────────────────────────────────
+.vscode/
+.idea/
+
+# ── Temp ──────────────────────────────────────────────────
+.kiro_tmp/
+*.log
